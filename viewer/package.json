@@ -1,0 +1,81 @@
+{
+  "name": "ai-conversation-converter",
+  "version": "1.0.0",
+  "description": "AI Conversation Converter - Desktop app to convert OpenAI and Anthropic conversation exports to markdown",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "NODE_ENV=development electron .",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux"
+  },
+  "keywords": [
+    "openai",
+    "anthropic",
+    "claude",
+    "chatgpt",
+    "conversation",
+    "markdown",
+    "converter"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^40.0.0",
+    "electron-builder": "^26.5.0"
+  },
+  "overrides": {
+    "tar": "^7.5.4"
+  },
+  "build": {
+    "appId": "com.aiconversations.converter",
+    "productName": "AI Conversation Converter",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "converter.html",
+      "main.js",
+      "preload.js",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "icon.ico"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "icon.icns",
+      "category": "public.app-category.utilities"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "icon.png",
+      "category": "Utility"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

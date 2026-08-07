@@ -1,0 +1,11 @@
+node_modules/
+viewer/node_modules/
+.specstory/
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*
+dist/
+build/
+out/
