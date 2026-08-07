@@ -1,0 +1,5 @@
+# Default owners for this repository
+* @George-Twiniti
+
+# Protect CI / release automation
+.github/ @George-Twiniti
