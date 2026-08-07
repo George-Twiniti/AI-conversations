@@ -1,8 +1,14 @@
 # AGENTS.md
 
+## Repository
+
+- **Path:** `C:\Users\George\Source\AIConversations`
+- **Remote:** `https://github.com/George-Twiniti/AI-conversations`
+- **Default branch:** `main`
+
 ## Mandatory Repo Confirmation
 
-Before any file edits, commits, or pushes, Codex must:
+Before any file edits, commits, or pushes, the agent must:
 
 1. Print current working directory (`pwd`).
 2. Print git top-level path (`git rev-parse --show-toplevel`).
@@ -12,8 +18,9 @@ Before any file edits, commits, or pushes, Codex must:
 
 No write operations are allowed before this confirmation.
 
-## Scope
+## Project notes
 
-These instructions apply to the Praxis repository at this path:
-
-`C:\Users\George\Source\Praxis`
+- Shared conversion logic lives in `viewer/lib/` — keep CLI and Electron on the same API.
+- Prefer extending `converter-core.js` / `convert-service.js` over duplicating parsers in the UI.
+- Desktop UI is `viewer/app.js` + `converter.html` + `styles.css`; conversion runs in `main.js` via IPC.
+- After meaningful feature work, update the root `README.md` (and `viewer/README.md` if desktop-specific).

@@ -1,108 +1,68 @@
-# AI Conversation Converter
+# AI Conversation Converter (desktop)
 
-A standalone desktop application to convert **OpenAI (ChatGPT)** and **Anthropic (Claude)** conversation exports into organized markdown files.
+Electron UI for the shared conversion engine. For the full project overview, see the [root README](../README.md).
 
 ## Features
 
-- 🖥️ **Standalone Desktop App** - Built with Electron, runs on Windows, macOS, and Linux
-- 🔄 **Auto-detect provider** - Sniffs `mapping` (OpenAI) vs `chat_messages` (Anthropic)
-- 📄 **Full OpenAI Export Support** - Handles JSON plus images, documents, and artifacts
-- 🟣 **Anthropic / Claude Support** - Linear `chat_messages`, ISO timestamps, inline artifacts
-- 🖼️ **Image Embedding** - Automatically embeds OpenAI images in markdown files
-- 📎 **Document Linking** - Links attachments; Anthropic extracted text is inlined
-- 📁 **Organized Output** - Flat markdown files with a shared artifacts folder
-- 📊 **Progress Tracking** - Real-time progress bar and conversion logs
+- Standalone desktop app (Windows, macOS, Linux)
+- Import **folder**, **`.zip`**, or JSON
+- Auto-detect **OpenAI / Anthropic / Gemini / Copilot**
+- Searchable conversation picker with multi-select
+- In-app markdown **preview**
+- Options: Obsidian frontmatter, `index.md`, date folders, collide handling
+- OpenAI `file-*` artifact copy into `artifacts/`
+- Cancelable conversion + live log/progress
+- Built-in **How to export** dialog
 
-## Installation
-
-1. Navigate to the `viewer` directory:
-   ```bash
-   cd viewer
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-## Usage
-
-### Development Mode
+## Install & run
 
 ```bash
+cd viewer
+npm install
 npm start
 ```
 
-Or with DevTools open:
+| Script | Purpose |
+| --- | --- |
+| `npm start` | Run the app |
+| `npm run dev` | Run with DevTools (`cross-env` works on Windows) |
+| `npm test` | Shared-core unit tests |
+| `npm run build:win` / `build:mac` / `build:linux` | Platform installers → `dist/` |
+
+## Typical workflow
+
+1. **Select Folder** or **Select File / ZIP** (drag-and-drop also works)
+2. Search and check the chats you want
+3. Click a row to **preview** markdown
+4. Set output options → **Choose Output Folder**
+5. **Convert Selected** — use **Cancel** to stop mid-run
+
+## CLI (same engine)
+
+From the repo root after `npm install` in `viewer/`:
 
 ```bash
-npm run dev
+node convert-openai-to-markdown.js path/to/export ./markdown-output --obsidian --index
 ```
 
-### Building for Distribution
+See the [root README](../README.md) for all flags and export instructions.
 
-```bash
-# Windows
-npm run build:win
+## Architecture
 
-# macOS
-npm run build:mac
+| Module | Role |
+| --- | --- |
+| `lib/converter-core.js` | Provider detect, message extract, markdown + frontmatter |
+| `lib/convert-service.js` | Find JSON in trees/zips, artifact map, batch convert + cancel |
+| `main.js` | Electron main process; holds loaded session; runs convert off the UI thread |
+| `preload.js` | Safe IPC bridge (`contextIsolation`) |
+| `app.js` + `converter.html` + `styles.css` | Renderer UI |
 
-# Linux
-npm run build:linux
-```
-
-Built applications will be in the `dist` directory.
-
-## How to Use
-
-### Full Export Mode (Recommended)
-
-1. **Launch the application** using `npm start`
-2. **Click "Select Source Folder"** and choose your export folder (contains `conversations.json`)
-3. The app detects OpenAI vs Anthropic automatically and shows the provider in the file info panel
-4. **Click "Choose Output Directory"**
-5. **Click "Convert to Markdown"**
-6. **Monitor progress** in the log panel
-
-### Legacy Mode (JSON Only)
-
-1. **Click "Select JSON File Only"** if you only have `conversations.json`
-2. Follow the output/convert steps above (OpenAI local artifacts will not be included)
-
-### CLI
-
-From the repo root:
-
-```bash
-node convert-openai-to-markdown.js path/to/conversations.json ./markdown-output
-```
-
-## Provider differences
-
-| Concern | OpenAI | Anthropic |
-| --- | --- | --- |
-| Message structure | `mapping` DAG | Linear `chat_messages` |
-| Title field | `title` | `name` |
-| Timestamps | Unix seconds (`create_time`) | ISO-8601 (`created_at`) |
-| Sender / role | `author.role` (`user` / `assistant`) | `sender` (`human` / `assistant`) |
-| Artifacts | Local `file-*` files copied into `artifacts/` | Inline text / `<antArtifact>` blocks / extracted attachment text |
-
-## Output Format
-
-```
-output_directory/
-  ├── 2023-04-25_Power_BI.md
-  ├── 2026-02-14_Postgres_vs_MongoDB.md
-  └── artifacts/
-      └── 2023-04-25_Power_BI/
-          └── file-abc123_chart.png
-```
+Conversion never re-implements parsing in the renderer — the UI only sends indexes and options over IPC.
 
 ## Requirements
 
-- Node.js (v14 or higher)
-- npm or yarn
+- Node.js 18+
+- npm
 
 ## License
 

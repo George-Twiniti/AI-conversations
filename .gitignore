@@ -1,5 +1,6 @@
 node_modules/
 viewer/node_modules/
+viewer/dist/
 .specstory/
 .DS_Store
 Thumbs.db
@@ -9,3 +10,5 @@ Thumbs.db
 dist/
 build/
 out/
+markdown-output/
+*.zip

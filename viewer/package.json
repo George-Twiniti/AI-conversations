@@ -1,28 +1,35 @@
 {
   "name": "ai-conversation-converter",
-  "version": "1.0.0",
-  "description": "AI Conversation Converter - Desktop app to convert OpenAI and Anthropic conversation exports to markdown",
+  "version": "1.1.0",
+  "description": "AI Conversation Converter - Desktop app to convert OpenAI, Anthropic, Gemini, and Copilot exports to markdown",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dev": "NODE_ENV=development electron .",
+    "dev": "cross-env NODE_ENV=development electron .",
     "build": "electron-builder",
     "build:win": "electron-builder --win",
     "build:mac": "electron-builder --mac",
-    "build:linux": "electron-builder --linux"
+    "build:linux": "electron-builder --linux",
+    "test": "node ../tests/converter-core.test.js"
   },
   "keywords": [
     "openai",
     "anthropic",
     "claude",
     "chatgpt",
+    "gemini",
+    "copilot",
     "conversation",
     "markdown",
     "converter"
   ],
-  "author": "",
+  "author": "George-Twiniti",
   "license": "MIT",
+  "dependencies": {
+    "adm-zip": "^0.5.16"
+  },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "electron": "^40.0.0",
     "electron-builder": "^26.5.0"
   },
@@ -37,9 +44,13 @@
     },
     "files": [
       "converter.html",
+      "app.js",
+      "styles.css",
       "main.js",
       "preload.js",
-      "package.json"
+      "package.json",
+      "lib/**/*",
+      "icons/**/*"
     ],
     "win": {
       "target": [
@@ -50,7 +61,7 @@
           ]
         }
       ],
-      "icon": "icon.ico"
+      "icon": "icons/icon.png"
     },
     "mac": {
       "target": [
@@ -62,7 +73,7 @@
           ]
         }
       ],
-      "icon": "icon.icns",
+      "icon": "icons/icon.png",
       "category": "public.app-category.utilities"
     },
     "linux": {
@@ -70,7 +81,7 @@
         "AppImage",
         "deb"
       ],
-      "icon": "icon.png",
+      "icon": "icons/icon.png",
       "category": "Utility"
     },
     "nsis": {
