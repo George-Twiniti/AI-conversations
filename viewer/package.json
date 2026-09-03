@@ -26,11 +26,11 @@
   "author": "George-Twiniti",
   "license": "MIT",
   "dependencies": {
-    "adm-zip": "^0.5.16"
+    "adm-zip": "^0.6.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "electron": "^40.0.0",
+    "electron": "^41.10.3",
     "electron-builder": "^26.5.0"
   },
   "overrides": {
