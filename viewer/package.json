@@ -26,7 +26,7 @@
   "author": "George-Twiniti",
   "license": "MIT",
   "dependencies": {
-    "adm-zip": "^0.6.0"
+    "adm-zip": "^0.6.1"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
