@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "electron": "^41.10.3",
+    "electron": "^41.10.6",
     "electron-builder": "^26.5.0"
   },
   "overrides": {
